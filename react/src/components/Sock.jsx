@@ -2,7 +2,10 @@ import React from "react";
 
 const Sock = ({ data }) => {
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{ flex: "1", minWidth: "300px", maxWidth: "45%" }}
+    >
       <div className="card-body">
         <h5 className="card-title">Sock Details</h5>
         <div className="card-text">Size: {data.sockDetails.size}</div>
