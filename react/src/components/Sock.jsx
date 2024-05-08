@@ -1,6 +1,6 @@
 import React from "react";
 
-const Sock = ({ data }) => {
+const Sock = ({ data, handleDelete }) => {
   return (
     <div
       className="card"
@@ -28,8 +28,17 @@ const Sock = ({ data }) => {
           Anti Bacterial: {data.additionalFeatures.antiBacterial ? "Yes" : "No"}
         </div>
       </div>
-      <div className="card-footer">
+      <div
+        className="card-footer"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
         <small className="text-muted">Added: {data.addedTimestamp}</small>
+        <button
+          className="btn btn-sm btn-danger"
+          onClick={() => handleDelete(data._id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
