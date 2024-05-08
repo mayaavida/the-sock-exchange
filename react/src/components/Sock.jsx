@@ -8,12 +8,14 @@ const Sock = ({ data, handleDelete }) => {
     >
       <div className="card-body">
         <h5 className="card-title">Sock Details</h5>
-        <div className="card-text">Size: {data.sockDetails.size}</div>
-        <div className="card-text">Color: {data.sockDetails.color} </div>
-        <div className="card-text">Pattern: {data.sockDetails.pattern}</div>
-        <div className="card-text">Material: {data.sockDetails.material}</div>
-        <div className="card-text">Condition: {data.sockDetails.condition}</div>
-        <div className="card-text">For Foot: {data.sockDetails.forFoot}</div>
+        <div className="card-text">Size: {data.sockDetails?.size}</div>
+        <div className="card-text">Color: {data.sockDetails?.color} </div>
+        <div className="card-text">Pattern: {data.sockDetails?.pattern}</div>
+        <div className="card-text">Material: {data.sockDetails?.material}</div>
+        <div className="card-text">
+          Condition: {data.sockDetails?.condition}
+        </div>
+        <div className="card-text">For Foot: {data.sockDetails?.forFoot}</div>
       </div>
       <div className="card-body">
         <h5 className="card-title">Additional Features</h5>
