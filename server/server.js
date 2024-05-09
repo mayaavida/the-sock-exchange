@@ -1,7 +1,16 @@
 import express from "express";
 import { promises as fs } from "fs";
+import { MongoClient, ObjectId } from "mongodb";
+import dotenv from "dotenv";
+import cors from "cors";
+
+dotenv.config();
+const url = process.env.MONGO_DB_URL;
+const dbName = process.env.MONGO_DB;
+const collectionName = process.env.MONGO_DB_COLLECTION;
 
 const app = express();
+app.use(cors());
 const PORT = 3000;
 
 app.use(express.json());
@@ -9,12 +18,11 @@ app.use(express.json());
 // Endpoint to read and send JSON file content
 app.get("/socks", async (req, res) => {
   try {
-    // Console log the entire request object
-    console.log(req);
-
-    const data = await fs.readFile("../data/socks.json", "utf8");
-    const jsonObj = JSON.parse(data);
-    res.json(jsonObj);
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+    const socks = await collection.find({}).toArray();
+    res.json(socks);
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Hmmm, something smells... No socks for you! ☹");
@@ -69,6 +77,25 @@ app.post("/socks", async (req, res) => {
   } catch (err) {
     console.error("Error:", err);
     res.status(500).send("Hmmm, something smells... No socks for you! ☹");
+  }
+});
+
+// POST Search Route Handler
+app.post("/socks/search", async (req, res) => {
+  try {
+    const searchColor = req.body.searchTerm;
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+    const socks = await collection
+      .find({ "sockDetails.color": searchColor })
+      .toArray();
+    res.json(socks);
+  } catch (err) {
+    console.error("Error:", err);
+    res
+      .status(500)
+      .send("Hmm, something doesn't smell right... Error searching for socks");
   }
 });
 

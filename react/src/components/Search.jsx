@@ -5,6 +5,7 @@ const Search = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("search term: ", searchTerm);
     fetch(`${import.meta.env.VITE_SOCKS_API_URL}/search`, {
       method: "POST",
       body: JSON.stringify({ searchTerm }),
