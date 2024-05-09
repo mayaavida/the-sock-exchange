@@ -143,6 +143,42 @@ const AddSock = () => {
                 name="sockFoot"
               />
             </div>
+            <div className="mb-3">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="waterResistant"
+                  value={waterResistant}
+                  onChange={(e) => setWaterResistant(!waterResistant)}
+                />
+                <label className="form-check-label">Water Resistant?</label>
+              </div>
+            </div>
+            <div className="mb-3">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="padded"
+                  value={padded}
+                  onChange={(e) => setPadded(!padded)}
+                />
+                <label className="form-check-label">Padded?</label>
+              </div>
+            </div>
+            <div className="mb-3">
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="antibacterial"
+                  value={antiBacterial}
+                  onChange={(e) => setAntiBacterial(!antiBacterial)}
+                />
+                <label className="form-check-label">AntiBacterial?</label>
+              </div>
+            </div>
             <button id="loginButton" type="submit" className="btn btn-primary">
               Submit
             </button>
