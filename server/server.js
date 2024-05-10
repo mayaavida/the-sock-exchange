@@ -79,8 +79,9 @@ app.post("/socks/search", async (req, res) => {
     const client = await MongoClient.connect(url);
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
+    const regex = new RegExp(searchColor, "i"); // Creates case-insensitive regex
     const socks = await collection
-      .find({ "sockDetails.color": searchColor })
+      .find({ "sockDetails.color": regex })
       .toArray();
     res.json(socks);
   } catch (err) {
