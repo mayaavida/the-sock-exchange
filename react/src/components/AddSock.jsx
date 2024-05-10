@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const AddSock = () => {
-  const [userId, setUserId] = useState("");
   const [sockSize, setSockSize] = useState("");
   const [sockColor, setSockColor] = useState("");
   const [sockPattern, setSockPattern] = useState("");
@@ -13,7 +12,6 @@ const AddSock = () => {
   const [antiBacterial, setAntiBacterial] = useState(false);
 
   let newSock = {
-    userId: userId,
     sockDetails: {
       size: sockSize,
       color: sockColor,
@@ -34,7 +32,7 @@ const AddSock = () => {
     e.preventDefault();
     console.log("info: ", newSock);
 
-    fetch("https://ecs.the-sock-exchange.com/api/socks", {
+    fetch(`${import.meta.env.VITE_SOCKS_API_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,12 +49,15 @@ const AddSock = () => {
         console.error(error);
       });
 
-    setAntiBacterial("");
-    setPadded("");
+    setAntiBacterial(false);
+    setPadded(false);
+    setWaterResistant(false);
     setSockColor("");
     setSockCondition("");
     setSockMaterial("");
     setSockPattern("");
+    setSockFoot("");
+    setSockSize("");
     setSockFoot("");
   };
 
@@ -66,17 +67,6 @@ const AddSock = () => {
         <div className="col">
           <h1>Add a Sock</h1>
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">User ID</label>
-              <input
-                onChange={(e) => setUserId(e.target.value)}
-                value={userId}
-                type="text"
-                className="form-control"
-                id="userId"
-                name="userId"
-              />
-            </div>
             <div className="mb-3">
               <label className="form-label">Sock Color</label>
               <input

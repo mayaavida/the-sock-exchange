@@ -55,24 +55,16 @@ app.get("/socks/:color", async (req, res) => {
 
 app.post("/socks", async (req, res) => {
   try {
-    // Obligatory reference to POST Malone
-    console.log(
-      "If POST Malone were a sock, he'd be the one with the most colorful pattern."
-    );
-    // Simulate creating a user
-    const { username, email } = req.body;
-    if (!username || !email) {
-      // Bad request if username or email is missing
-      return res
-        .status(400)
-        .send({ error: "Username and email are required." });
-    }
+    const newSock = req.body;
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
+    collection.insertOne(newSock);
 
     // Respond with the created user information and a 201 Created status
     res.status(201).send({
       status: "success",
-      location: "http://localhost:3000/users/1234", // This URL should point to the newly created user
-      message: "User created successfully.",
+      message: "Sock created successfully.",
     });
   } catch (err) {
     console.error("Error:", err);
@@ -102,7 +94,11 @@ app.post("/socks/search", async (req, res) => {
 app.delete("/socks/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const client = await MongoClient.connect(url);
+    const db = client.db(dbName);
+    const collection = db.collection(collectionName);
     console.log("Deleting sock with ID:", id);
+    collection.deleteOne({ _id: new ObjectId(id) });
     res.status(200).send("Sock deleted successfully");
   } catch (err) {
     console.error("Error:", err);
