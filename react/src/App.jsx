@@ -6,6 +6,9 @@ import Featured from "./components/Featured";
 import Home from "./components/Home";
 import About from "./components/About";
 import AddSock from "./components/AddSock";
+import { AuthProvider } from "../hooks/AuthContext";
+import RequireAuth from "./components/RequireAuth";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   const [data, setData] = useState([]);
@@ -132,15 +135,26 @@ function App() {
               Both socks and space rockets 🚀 will take you to new heights, but
               only one will get cold feet!
               <Featured />
-              <Routes>
-                <Route
-                  exact
-                  path="/"
-                  element={<Home data={data} handleDelete={handleDelete} />}
-                />
-                <Route path="/about" element={<About />} />
-                <Route path="/add" element={<AddSock />}></Route>
-              </Routes>
+              <AuthProvider>
+                {" "}
+                <Routes>
+                  <Route
+                    exact
+                    path="/"
+                    element={<Home data={data} handleDelete={handleDelete} />}
+                  />
+                  <Route path="/about" element={<About />} />
+                  <Route
+                    path="/add"
+                    element={
+                      <RequireAuth>
+                        <AddSock />
+                      </RequireAuth>
+                    }
+                  ></Route>
+                  <Route path="/Login" element={<LoginForm />} />
+                </Routes>
+              </AuthProvider>
               <Footer environment={import.meta.env.VITE_ENVIRONMENT} />
             </div>
           </div>
